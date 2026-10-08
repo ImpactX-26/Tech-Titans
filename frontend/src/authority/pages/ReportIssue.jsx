@@ -25,11 +25,10 @@ function ReportIssue() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         });
-
         setError("");
       },
       () => {
-        setError("Please allow location access.");
+        setError("Please allow location access to report the issue.");
       }
     );
   };
@@ -59,13 +58,10 @@ function ReportIssue() {
       });
 
       navigate("/result", {
-        state: {
-          complaint: complaint,
-        },
+        state: { complaint },
       });
     } catch (err) {
       console.error(err);
-
       setError(
         err.response?.data?.detail ||
           "Unable to submit complaint. Please try again."
@@ -82,28 +78,23 @@ function ReportIssue() {
   return (
     <div className="report-page">
       <div className="report-container">
-
         <h1>Report a Civic Issue</h1>
 
         <p className="page-description">
-          Tell us what is wrong. Our AI will understand,
-          prioritize and route your complaint to the right authority.
+          Tell us what is wrong. Our AI will understand, prioritize and route
+          your complaint to the right authority.
         </p>
 
-        <form
-          className="report-form"
-          onSubmit={handleSubmit}
-        >
-
+        <form onSubmit={handleSubmit} className="report-form">
           <label>
             Describe the issue
           </label>
 
           <textarea
-            rows="6"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Example: There is a large pothole near the main road..."
+            rows="6"
           />
 
           <label>
@@ -112,7 +103,6 @@ function ReportIssue() {
 
           <label className="photo-upload">
             <Camera size={22} />
-
             <span>
               {photo ? photo.name : "Choose an image"}
             </span>
@@ -120,15 +110,12 @@ function ReportIssue() {
             <input
               type="file"
               accept="image/*"
+              onChange={(e) => setPhoto(e.target.files[0])}
               hidden
-              onChange={(e) => {
-                setPhoto(e.target.files[0]);
-              }}
             />
           </label>
 
           <div className="location-section">
-
             <div>
               <strong>Location</strong>
 
@@ -137,9 +124,7 @@ function ReportIssue() {
                   ✓ Location captured
                 </p>
               ) : (
-                <p>
-                  Location is required for routing your complaint.
-                </p>
+                <p>Location is required for routing your complaint.</p>
               )}
             </div>
 
@@ -149,28 +134,16 @@ function ReportIssue() {
               onClick={getLocation}
             >
               <MapPin size={18} />
-
-              {location
-                ? "Location Added"
-                : "Share Location"}
+              {location ? "Location Added" : "Share Location"}
             </button>
-
           </div>
 
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
+          {error && <div className="error-message">{error}</div>}
 
-          <button
-            type="submit"
-            className="submit-button"
-          >
+          <button type="submit" className="submit-button">
             <Send size={18} />
             Submit Complaint
           </button>
-
         </form>
       </div>
     </div>
