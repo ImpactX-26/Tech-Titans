@@ -1,13 +1,21 @@
-# Environment files
+# Dependencies
+
+node_modules/
+**/node_modules/
+
+# Environment secrets
+
 .env
-**/.env
+.env.*
+!.env.example
 
 # Python
-venv/
-**/venv/
-__pycache__/
-*.pyc
 
-# Uploads
-uploads/
-**/uploads/
+**pycache**/
+*.pyc
+.venv/
+venv/
+
+# Build files
+
+dist/
